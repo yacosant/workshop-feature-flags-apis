@@ -1,8 +1,8 @@
 # CodeMeet Workshop: Automatiza tu Backend. Feature Flags y APIs con Agentes IA
 
-Repositorio creado específicamente para el evento [**CodeMeet Workshop: Automatiza tu Backend - Feature Flags y APIs con Agentes IA**](https://community.codemotion.com/codemotion-espana/meetups/codemeet-workshop-automatiza-tu-backend--feature-flags-y-apis-con-agentes-ia) del 19 de junio de 2025 en EY Madrid.
+Repositorio creado específicamente para el [**evento**](https://community.codemotion.com/codemotion-espana/meetups/codemeet-workshop-automatiza-tu-backend--feature-flags-y-apis-con-agentes-ia) del 19 de junio de 2025 en EY Madrid.
 
-## Description
+## DESCRIPCIÓN
 
 Workshop práctico centrado en cómo los Agentes IA pueden ayudarte a crear APIs REST eficientes, al tiempo que implementas Feature Flags para una entrega continua y controlada. Aprende a integrar estas tecnologías en tu ciclo de vida de desarrollo y lleva tu stack al siguiente nivel.
 
