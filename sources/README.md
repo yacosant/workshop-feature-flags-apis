@@ -1,24 +1,37 @@
-# Monorepo Feature Flags APIs
+# Código Base para los ejercicios
 
 Este repositorio contiene 5 proyectos independientes:
 
 - **nestjs-api**: API básica con NestJS
 - **springboot-api**: API básica con Spring Boot
 - **clojure-api**: API básica con Clojure (Leiningen + Ring)
-- **nuxt3-web**: Frontend básico con Nuxt 3 (incluye endpoint /api/health con conexión a MongoDB)
+- **nuxt3-web**: Frontend básico con Nuxt 3 (incluye endpoint /api/health)
 - **express-api**: API básica con Express.js
 
 Todos los proyectos pueden conectarse a una base de datos MongoDB incluida en el `docker-compose.yml`.
 
-## Ejecución local (desarrollo)
+## Ejecución local (modo desarrollo)
 
-- NestJS: `cd nestjs-api && npm run start:dev`
+- NestJS: `cd nestjs-api && npm install && npm run start:dev`
+  - Puerto: [3001](http://localhost:3001/health)
+  - Requiere: Node 20
+- Express: `cd express-api && npm install && npm run dev`
+  - Puerto: [3002](http://localhost:3002/health)
+  - Requiere: Node 20
 - Spring Boot: `cd springboot-api && mvn spring-boot:run`
+  - Puerto: [3003](http://localhost:3003/health)
+  - Requiere: Java 21
 - Clojure: `cd clojure-api && lein ring server`
-- Nuxt 3: `cd nuxt3-web && npm run dev` (incluye endpoint /api/health)
-- Express: `cd express-api && npm run dev`
+  - Puerto: [3004](http://localhost:3004/health)
+  - Requiere: Leiningen 2.11 y Java 17+
+- Nuxt 3: `cd nuxt3-web && npm install && npm run dev` (incluye server con endpoints)
+  - Puerto: [3000](http://localhost:3000/health)
+  - Requiere: Node 20
+- MongoDB: `docker-compose up mongo --build`
+  - Requiere: Docker
+  - Opcional: Cliente MongoDB Compass
 
-## Ejecución con Docker Compose
+## Ejecución con Docker Compose (RECOMENDADO)
 
 - Para desarrollo (hot reload, cambios reflejados automáticamente):
   ```
@@ -32,42 +45,46 @@ Todos los proyectos pueden conectarse a una base de datos MongoDB incluida en el
   docker-compose up --build
   ```
 
-Esto levantará las 5 apps y MongoDB.
+Esto arrancará las 5 apps y MongoDB.
 
-## Levantar solo un servicio con Docker Compose
+## Iniciar solo un servicio con Docker Compose
 
-Puedes levantar únicamente un servicio (y sus dependencias) usando:
+Puedes iniciar únicamente un servicio (y sus dependencias) usando:
 
 ```
 docker-compose up <nombre_servicio>
 ```
 
-Por ejemplo, para levantar solo la API de Spring Boot:
+Por ejemplo, para iniciar solo la API de Spring Boot:
 
 ```
 docker-compose up springboot-api
 ```
 
-O para levantar solo la API de Express:
+O para iniciar solo la API de Express:
 
 ```
 docker-compose up express-api
 ```
 
-Esto solo iniciará ese servicio y los que dependa (por ejemplo, `mongo`).
+Para "restart" un servicio
+```
+docker-compose restart <nombre_servicio>
+``` 
+
+Estas instrucciones iniciará ese servicio y los que dependan (por ejemplo, `mongo`).
 
 ## Estructura
 
-- Cada carpeta contiene un proyecto independiente, siguiendo la estructura oficial de cada framework.
+- Cada carpeta contiene un proyecto independiente, modificado para el workshop.
 - El archivo `docker-compose.yml` orquesta todos los servicios.
 
 ## Notas
 
-- Asegúrate de tener Node.js, Java, Leiningen y Docker instalados para desarrollo local.
-- Para producción, adapta los Dockerfiles y variables de entorno según tus necesidades.
-- Para desarrollo, los cambios en el código fuente se reflejan automáticamente en los contenedores gracias a los volúmenes y comandos de hot reload.
+- Asegúrate de tener Node.js, Java, Leiningen y Docker instalados para desarrollo sin docker o en su lugar utiliza docker.
+- Docker genera varios volumenes para los servicios, entre ellos el de mongo_data.
 
-## Gestión de Feature Flags
+## Gestión de Feature Flags - Básico
 
 - Los feature flags se almacenan en MongoDB y se exponen mediante endpoints `/api/features` (Nuxt3) y equivalentes en otros servicios.
 - El frontend Nuxt3 consume los flags usando servicios y composables (`useFeatureFlags`, `fetchFeatureFlagsApi`).
@@ -78,6 +95,8 @@ Esto solo iniciará ese servicio y los que dependa (por ejemplo, `mongo`).
   const { flags, isEnabled } = useFeatureFlags();
   ```
 
+- Para todas las otras APIs, tambien hay implementado un endpoint /api/features, como base de conexión con MongoDB y gestor de Features Flags.
+
 ## TailwindCSS en Nuxt3
 
 - TailwindCSS está configurado en `nuxt3-web`.
@@ -86,5 +105,5 @@ Esto solo iniciará ese servicio y los que dependa (por ejemplo, `mongo`).
 
 ## Endpoints útiles
 
-- `/api/features` (Nuxt3): Devuelve los feature flags actuales.
+- `/api/features` (todas las APIs): Devuelve los feature flags actuales.
 - `/api/health` (todos los servicios): Devuelve el estado de salud y conexión a base de datos.
