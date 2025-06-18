@@ -1,20 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { MongoClient } from 'mongodb';
+import { MongoService } from './mongo.service';
 
 @Injectable()
 export class AppService {
-
-  private readonly mongoUrl = process.env.MONGO_URL || 'mongodb://mongo:27017/shared_db';
+  constructor(private readonly mongoService: MongoService) { }
 
   async ping(): Promise<boolean> {
-    try {
-      const client = new MongoClient(this.mongoUrl);
-      await client.db().admin().ping();
-      await client.close();
-      return true;
-    } catch {
-      return false;
-    }
+    return this.mongoService.ping();
   }
 
+  async getFeatures(): Promise<any> {
+    const docs = await this.mongoService.findDocuments('featureFlags', {});
+    if (!docs.length) {
+      return { status: 404, message: 'No features found' };
+    }
+    const features = docs.reduce((acc, { name, value }) => {
+      acc[name] = value;
+      return acc;
+    }, {});
+    return features;
+  }
 }
