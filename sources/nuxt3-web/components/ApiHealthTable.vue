@@ -9,6 +9,8 @@
             <th class="px-6 py-4 text-left font-semibold text-gray-700">url</th>
             <th class="px-6 py-4 text-left font-semibold text-gray-700">status</th>
             <th class="px-6 py-4 text-left font-semibold text-gray-700">database</th>
+            <th class="px-6 py-4 text-left font-semibold text-gray-700">url flags</th>
+            <th class="px-6 py-4 text-left font-semibold text-gray-700">features</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +22,10 @@
               }}</span>
             </td>
             <td class="px-6 py-4">{{ api.database }}</td>
+            <td class="px-6 py-4 text-blue-700 truncate max-w-xs">{{ api.urlFlags || '' }}</td>
+            <td class="px-6 py-4">
+              <span v-if="api.features">{{ JSON.stringify(api.features) }}</span>
+            </td>
           </tr>
         </tbody>
       </table>
