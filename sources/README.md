@@ -45,7 +45,7 @@ Todos los proyectos pueden conectarse a una base de datos MongoDB incluida en el
   docker-compose up --build
   ```
 
-Esto arrancará las 5 apps y MongoDB.
+Esto iniciará las 5 apps y MongoDB.
 
 ## Iniciar solo un servicio con Docker Compose
 
