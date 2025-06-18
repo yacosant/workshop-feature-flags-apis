@@ -1,0 +1,70 @@
+services:
+  nuxt3-web:
+    build: ./nuxt3-web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nuxt3-web:/app
+      - /app/node_modules
+    command: npm run dev
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/shared_db
+    depends_on:
+      - mongo
+  nestjs-api:
+    build: ./nestjs-api
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/shared_db
+    volumes:
+      - ./nestjs-api:/app
+      - /app/node_modules
+    command: npm run start:dev
+    depends_on:
+      - mongo
+  express-api:
+    build: ./express-api
+    ports:
+      - "3002:3002"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/shared_db
+    volumes:
+      - ./express-api:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - mongo
+  springboot-api:
+    image: maven:3.9.6-eclipse-temurin-21
+    working_dir: /app
+    volumes:
+      - ./springboot-api:/app
+    ports:
+      - "3003:3003"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/shared_db
+    command: mvn spring-boot:run
+    depends_on:
+      - mongo
+  clojure-api:
+    build: ./clojure-api
+    ports:
+      - "3004:3004"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/shared_db
+    volumes:
+      - ./clojure-api:/app
+    command: lein ring server-headless
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./docker/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    command: ["mongod", "--bind_ip_all", "--quiet"]
+volumes:
+  mongo_data:

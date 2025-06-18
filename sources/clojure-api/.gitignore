@@ -1,0 +1,24 @@
+# Clojure build
+/target
+/classes
+/checkouts
+*.jar
+*.class
+/.lein-*
+/.nrepl-port
+/.prepl-port
+
+# IDEs
+.hgignore
+.hg/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+profiles.clj
+pom.xml
+pom.xml.asc
