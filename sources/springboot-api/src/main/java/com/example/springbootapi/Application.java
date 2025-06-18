@@ -12,28 +12,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Map;
 
 @SpringBootApplication
-public class SpringbootApiApplication {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootApiApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @RestController
-    class HelloController {
-        @GetMapping("/")
-        public String hello() {
-            return "Hello World from Spring Boot!";
-        }
-    }
-
-    @RestController
-    public class HealthController {
+    public class AppController {
         @Autowired
-        private HealthService healthService;
+        private AppService appService;
 
         @GetMapping("/health")
         public Map<String, Object> health() {
-            boolean isAlive = healthService.ping();
-            return Map.of("name", "springboot-api", "status", 200, "database", isAlive ? "OK" : "KO");
+            return appService.getHealth();
+        }
+
+        @GetMapping("/features")
+        public Map<String, Object> features() {
+            return appService.getFeatures();
         }
     }
 
