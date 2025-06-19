@@ -32,6 +32,11 @@ Descubrirás mejorar la flexibilidad de tus despliegues y mantener el control to
 -	Git o Gitlab o Github (donde estará el repositorio con la base)
 -	Docker o Node (npm) o Clojure o Java.
 
+## Código y Ejercicios
+
+Los ejercicios prácticos comienza con la descarga e instalacíon de las siguintes [fuentes](sources/README.md)
+
+
 ## Documentación (recomendada)
 
 - [Feature Toggles (aka Feature Flags)](https://martinfowler.com/articles/feature-toggles.html) de Martin Fowler.
